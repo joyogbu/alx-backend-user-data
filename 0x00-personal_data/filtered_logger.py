@@ -10,4 +10,5 @@ def filter_datum(fields, redaction, message, separator):
     # for i in message:
     item = message.split(separator)
     #return (item)
-    re.sub(fields, redaction, message)
+    for i in fields:
+        re.sub(i, redaction, message)
