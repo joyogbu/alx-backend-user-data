@@ -9,6 +9,6 @@ def filter_datum(fields, redaction, message, separator):
     '''defining the function'''
     # for i in message:
     item = message.split(separator)
-    #return (item)
+    # return (item)
     for i in fields:
         re.sub(i, redaction, message)
