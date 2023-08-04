@@ -7,8 +7,6 @@ import re
 
 def filter_datum(fields, redaction, message, separator):
     '''defining the function'''
-    # for i in message:
-    item = message.split(separator)
-    # return (item)
-    for i in fields:
-        re.sub(i, redaction, message)
+    res = re.sub('|'.join('(?<={}=)([^{}]*)'.format(item, separator)
+                          for item in fields), redaction, message)
+    return (res)
