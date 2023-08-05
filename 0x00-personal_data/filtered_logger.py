@@ -6,7 +6,8 @@ import re
 from typing import List, Any, Match
 
 
-def filter_datum(fields: List[str], redaction: str, message: str, separator: str) -> str:
+def filter_datum(fields: List[str], redaction: str, message: str,
+                 separator: str) -> str:
     '''defining the function'''
-    return re.sub('|'.join('(?<={}=)([^{}]*)'.format(item, separator)
-                          for item in fields), redaction, message)
+    return re.sub('|'.join('(?<={}=)([^{}]*)'.format(
+              item, separator) for item in fields), redaction, message)
