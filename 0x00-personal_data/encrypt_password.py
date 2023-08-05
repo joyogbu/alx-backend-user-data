@@ -12,12 +12,10 @@ def hash_password(password: str) -> bytes:
     hashed_password = bcrypt.hashpw(pwd_bytes, salt)
     return hashed_password
 
+
 def is_valid(hashed_password: bytes, password: str) -> bool:
     '''defining the function'''
     hashed_byte = password.encode('utf-8')
-    # hash_pass = hashed_password.encode('utf-8')
-    hash_pass = bcrypt.hashpw(hashed_byte, bcrypt.gensalt())
-
-    if not bcrypt.checkpw(hash_pass, hashed_password):
+    if not bcrypt.checkpw(hashed_byte, hashed_password):
         return False
     return True
