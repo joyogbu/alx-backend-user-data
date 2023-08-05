@@ -7,6 +7,10 @@ from typing import List, Any, Match
 import logging
 
 
+def filter_datum(fields: List[str], redaction: str, message: str, separator: str) -> str:
+    '''defining the function'''
+    return re.sub('|'.join('(?<={}=)([^{}]*)'.format(item, separator) for item in fields), redaction, message)
+
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class
         """
@@ -20,12 +24,14 @@ class RedactingFormatter(logging.Formatter):
         self.fields = []
 
     def format(self, record: logging.LogRecord) -> str:
-        for items in self.fields:
-            return filter_datum(items, self.REDACTION, record, self.SEPARATOR)
+        # for items in self.fields:
+        return filter_datum(self.fields, self.REDACTION, str(record), self.SEPARATOR)
+        #return super().format(res)
+        #logging.log(res) 
 
 
-def filter_datum(fields: List[str], redaction: str, message: str,
+"""def filter_datum(fields: List[str], redaction: str, message: str,
                  separator: str) -> str:
     '''defining the function'''
     return re.sub('|'.join('(?<={}=)([^{}]*)'.format(
-              item, separator) for item in fields), redaction, message)
+              item, separator) for item in fields), redaction, message)"""
