@@ -8,11 +8,11 @@ import logging
 import csv
 
 
-with open('user_data.csv', 'r') as csvfile:
-    for line in csv.DictReader(csvfile):
-        my_t = tuple([line['phone'], line['ssn'], line['password'],
-                     line['ip'], line['last_login']])
-    PII_FIELDS = my_t
+# with open('user_data.csv', 'r') as csvfile:
+    # for line in csv.DictReader(csvfile):
+        # my_t = tuple([line['phone'], line['ssn'], line['password'],
+      #               line['ip'], line['last_login']])
+PII_FIELDS = ('phone', 'ssn', 'password', 'ip', 'last_login')
 
 
 def filter_datum(fields: List[str], redaction: str, message: str,
