@@ -7,7 +7,7 @@ from typing import List, Any, Match
 import logging
 import csv
 import os
-import mysql.connector
+from mysql.connector import (connection)
 
 
 PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password')
@@ -89,8 +89,8 @@ def get_db():
     PERSONAL_DATA_DB_PASSWORD = os.getenv("PERSONAL_DATA_DB_PASSWORD", "")
     PERSONAL_DATA_DB_HOST = os.getenv("PERSONAL_DATA_DB_HOST", "localhost")
     PERSONAL_DATA_DB_NAME = os.getenv("PERSONAL_DATA_DB_NAME", "holberton")
-    my_con = mysql.connector.connect(host=PERSONAL_DATA_DB_HOST,
-                                     user=PERSONAL_DATA_DB_USERNAME,
-                                     passwd=PERSONAL_DATA_DB_PASSWORD,
-                                     database=PERSONAL_DATA_DB_NAME)
+    my_con = connection.MySQLConnection(host=PERSONAL_DATA_DB_HOST,
+                                        user=PERSONAL_DATA_DB_USERNAME,
+                                        passwd=PERSONAL_DATA_DB_PASSWORD,
+                                        database=PERSONAL_DATA_DB_NAME)
     return (my_con)
