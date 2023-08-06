@@ -5,6 +5,14 @@
 import re
 from typing import List, Any, Match
 import logging
+import csv
+
+
+with open('user_data.csv', 'r') as csvfile:
+    for line in csv.DictReader(csvfile):
+        PII_FIELDS = tuple([line['email'], line['phone'], line['ssn'],
+                            line['password'], line['ip']])
+    # print(len(PII_FIELDS))
 
 
 def filter_datum(fields: List[str], redaction: str, message: str,
@@ -60,8 +68,21 @@ class RedactingFormatter(logging.Formatter):
         return super().format(record)
 
 
-"""def filter_datum(fields: List[str], redaction: str, message: str,
-                 separator: str) -> str:
-    '''defining the function'''
-    return re.sub('|'.join('(?<={}=)([^{}]*)'.format(
-              item, separator) for item in fields), redaction, message)"""
+def get_logger():
+    '''get logger function that returns a logger'''
+    logger = logging.getLogger(__name__)
+    # logger = logging.basicConfig(level=logging.INFO)
+    # logger.propagate = False
+    # logger.setLevel(logging.INFO)
+    c_handler = logging.StreamHandler()
+    c_handler.setLevel(logging.INFO)
+    c_format = logging.Formatter(RedactingFormatter.FORMAT)
+    c_handler.setFormatter(c_format)
+    logger.addhandler(c_handler)
+    # logger.addHandler(logging.StreamHandler.setFormatter(RedactingFormatter))
+    logger.debug('debug message')
+    logger.info('info message')
+    logger.warn('warn message')
+    logger.error('error message')
+    logger.critical('critical message')
+    return (logger)
