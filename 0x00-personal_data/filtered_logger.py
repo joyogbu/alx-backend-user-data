@@ -66,7 +66,7 @@ class RedactingFormatter(logging.Formatter):
 
 def get_logger() -> logging.Logger:
     '''get logger function that returns a logger'''
-    logger = logging.getLogger(__name__)
+    logger = logging.getLogger("user_data")
     # logger = logging.basicConfig(level=logging.INFO)
     logger.propagate = False
     # logger.setLevel(logging.INFO)
