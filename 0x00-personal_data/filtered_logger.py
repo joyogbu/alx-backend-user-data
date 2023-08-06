@@ -8,10 +8,6 @@ import logging
 import csv
 
 
-# with open('user_data.csv', 'r') as csvfile:
-    # for line in csv.DictReader(csvfile):
-        # my_t = tuple([line['phone'], line['ssn'], line['password'],
-      #               line['ip'], line['last_login']])
 PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password')
 
 
