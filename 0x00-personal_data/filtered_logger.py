@@ -6,6 +6,8 @@ import re
 from typing import List, Any, Match
 import logging
 import csv
+import os
+import mysql.connector
 
 
 PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password')
@@ -67,18 +69,28 @@ class RedactingFormatter(logging.Formatter):
 def get_logger() -> logging.Logger:
     '''get logger function that returns a logger'''
     logger = logging.getLogger("user_data")
-    # logger = logging.basicConfig(level=logging.INFO)
     logger.propagate = False
-    # logger.setLevel(logging.INFO)
     c_handler = logging.StreamHandler()
     c_handler.setLevel(logging.INFO)
     c_format = logging.Formatter(RedactingFormatter.FORMAT)
     c_handler.setFormatter(c_format)
     logger.addhandler(c_handler)
-    # logger.addHandler(logging.StreamHandler.setFormatter(RedactingFormatter))
     logger.debug('debug message')
     logger.info('info message')
     logger.warn('warn message')
     logger.error('error message')
     logger.critical('critical message')
     return (logger)
+
+
+def get_db():
+    '''connect to a database'''
+    PERSONAL_DATA_DB_USERNAME = os.getenv("PERSONAL_DATA_DB_USERNAME", "root")
+    PERSONAL_DATA_DB_PASSWORD = os.getenv("PERSONAL_DATA_DB_PASSWORD", "")
+    PERSONAL_DATA_DB_HOST = os.getenv("PERSONAL_DATA_DB_HOST", "localhost")
+    PERSONAL_DATA_DB_NAME = os.getenv("PERSONAL_DATA_DB_NAME", "holberton")
+    my_con = mysql.connector.connect(host=PERSONAL_DATA_DB_HOST,
+                                     user=PERSONAL_DATA_DB_USERNAME,
+                                     passwd=PERSONAL_DATA_DB_PASSWORD,
+                                     database=PERSONAL_DATA_DB_NAME)
+    return (my_con)
