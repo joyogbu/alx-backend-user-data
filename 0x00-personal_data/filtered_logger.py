@@ -12,7 +12,7 @@ import csv
     # for line in csv.DictReader(csvfile):
         # my_t = tuple([line['phone'], line['ssn'], line['password'],
       #               line['ip'], line['last_login']])
-PII_FIELDS = ('phone', 'ssn', 'password', 'ip', 'last_login')
+PII_FIELDS = ('email', 'phone', 'ssn', 'password', 'ip')
 
 
 def filter_datum(fields: List[str], redaction: str, message: str,
