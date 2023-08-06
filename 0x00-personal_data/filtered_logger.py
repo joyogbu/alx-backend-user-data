@@ -7,13 +7,18 @@ from typing import List, Any, Match
 import logging
 
 
-def filter_datum(fields: List[str], redaction: str, message: str, separator: str) -> str:
+def filter_datum(fields: List[str], redaction: str, message: str,
+                 separator: str) -> str:
     '''defining the function'''
-    return re.sub('|'.join('(?<={}=)([^{}]*)'.format(item, separator) for item in fields), redaction, message)
+    return re.sub('|'.join('(?<={}=)([^{}]*)'.format(
+              item, separator) for item in fields), redaction, message)
+
 
 class RedactingFormatter(logging.Formatter):
-    """ Redacting Formatter class
-        """
+    """Redacting Formatter class
+    Arguments:
+    logging.Formater
+    """
 
     REDACTION = "***"
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
@@ -25,9 +30,10 @@ class RedactingFormatter(logging.Formatter):
 
     def format(self, record: logging.LogRecord) -> str:
         # for items in self.fields:
-        return filter_datum(self.fields, self.REDACTION, str(record), self.SEPARATOR)
-        #return super().format(res)
-        #logging.log(res) 
+        return filter_datum(self.fields, self.REDACTION, str(record),
+                            self.SEPARATOR)
+        # return super().format(res)
+        # logging.log(res)
 
 
 """def filter_datum(fields: List[str], redaction: str, message: str,
