@@ -10,9 +10,9 @@ import csv
 
 with open('user_data.csv', 'r') as csvfile:
     for line in csv.DictReader(csvfile):
-        PII_FIELDS = tuple([line['email'], line['phone'], line['ssn'],
-                            line['password'], line['ip']])
-    # print(len(PII_FIELDS))
+        my_t = tuple([line['phone'], line['ssn'], line['password'],
+                     line['ip'], line['last_login']])
+    PII_FIELDS = my_t
 
 
 def filter_datum(fields: List[str], redaction: str, message: str,
