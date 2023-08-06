@@ -15,10 +15,21 @@ def filter_datum(fields: List[str], redaction: str, message: str,
 
 
 class RedactingFormatter(logging.Formatter):
-    """Redacting Formatter class
+    """Redacting Formatter class that creates a formatter object
 
     Args:
+    -----
     logging.Formater: formatter objectu
+
+    Attributes
+    ----------
+    REDACTION: a replacement string for the logged message
+    FORMAT: format of the log message
+    fields: a list of words to be raplaced
+
+    Methods
+    -------
+    format: a method that returns the formatted log mesage
     """
 
     REDACTION = "***"
@@ -26,10 +37,22 @@ class RedactingFormatter(logging.Formatter):
     SEPARATOR = ";"
 
     def __init__(self, fields: List[str]):
+        """instantiating the class
+
+        Parameters
+        ----------
+        fields: a list of words
+        """
         super(RedactingFormatter, self).__init__(self.FORMAT)
         self.fields = []
 
     def format(self, record: logging.LogRecord) -> str:
+        """a function that returns a formatted log
+
+        Parameters
+        ----------
+        record: a logged message
+        """
         # for items in self.fields:
         return filter_datum(self.fields, self.REDACTION, str(record),
                             self.SEPARATOR)
