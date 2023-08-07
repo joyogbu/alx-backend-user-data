@@ -94,3 +94,16 @@ def get_db() -> connection.MySQLConnection:
                                         host=PERSONAL_DATA_DB_HOST,
                                         database=PERSONAL_DATA_DB_NAME)
     return (my_con)
+
+
+def main() -> None:
+    '''main funtion to connect to the database'''
+    con = get_db()
+    cursor = con.cursor()
+    cursor.execute("SELECT * FROM users")
+    for row in cursor:
+        print(row)
+
+
+if __name__ == "__main__":
+    main()
