@@ -70,16 +70,12 @@ def get_logger() -> logging.Logger:
     '''get logger function that returns a logger'''
     logger = logging.getLogger("user_data")
     logger.propagate = False
+    logger.setLevel(logging.INFO)
     c_handler = logging.StreamHandler()
     c_handler.setLevel(logging.INFO)
-    c_format = logging.Formatter(RedactingFormatter.FORMAT)
+    c_format = RedactingFormatter(list(PII_FIELDS))
     c_handler.setFormatter(c_format)
-    logger.addhandler(c_handler)
-    logger.debug('debug message')
-    logger.info('info message')
-    logger.warn('warn message')
-    logger.error('error message')
-    logger.critical('critical message')
+    logger.addHandler(c_handler)
     return (logger)
 
 
@@ -101,8 +97,15 @@ def main() -> None:
     con = get_db()
     cursor = con.cursor()
     cursor.execute("SELECT * FROM users")
-    for row in cursor:
-        print(row)
+    logger = get_logger()
+    for row in cursor.fetchall():
+        fields = map(lambda x: x[0], cursor.description)
+        result = ([dict(zip(fields, row))])
+        tags = [("{}={}; ").format(k, v) for d in result for k, v in d.items()]
+        tag = "".join(tags)
+        logger.info(tag)
+    cursor.close()
+    con.close()
 
 
 if __name__ == "__main__":
