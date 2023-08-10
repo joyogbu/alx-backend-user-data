@@ -55,7 +55,8 @@ class BasicAuth(Auth):
         mypass = ":".join(decoded_str[1:])
         return (decoded_str[0], mypass)
 
-    def user_object_from_credentials(self, user_email: str, user_pwd: str) -> TypeVar('User'):
+    def user_object_from_credentials(self, user_email: str,
+                                     user_pwd: str) -> TypeVar('User'):
         '''returns the user instance based on email and password'''
         if user_email is None or type(user_email) != str:
             return None
@@ -68,9 +69,9 @@ class BasicAuth(Auth):
         my_dict = User().to_json(my_obj)
 
         my_user = User().search(my_dict)
-        if not my_usr:
+        if not my_user:
             return None
-        if m_user.password != valid:
+        if m_user.password != user_pwd:
             return None
         return (my_user)
 
