@@ -56,12 +56,26 @@ class BasicAuth(Auth):
         '''returns the user instance based on email and password'''
         if user_email is None or type(user_email) != str:
             return None
-        valid = User().is_valid_password(user_pwd)
+        if user_pwd is None or type(user_pwd) != str:
+            return None
+        '''valid = User().is_valid_password(user_pwd)
         if valid is False:
+            return None'''
+        my_obj = User().load_from_file()
+        my_dict = User().to_json(my_obj)
+
+        my_user = User().search(my_dict)
+        if not my_usr:
             return None
-        my_user = User.search({email: user_email})
-        if not my_user:
-            return None
-        if my_user.password != valid:
+        if m_user.password != valid:
             return None
         return (my_user)
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        '''retrieves a user instance for a request'''
+        a1 = Auth().authorization_header(request)
+        a2 = extract_base64_authorization_header(a1)
+        a3 = decode_base64_authorization_header(a2)
+        a4 = extract_user_credentials(a3)
+        a5 = user_object_from_credentials(a4)
+        return (a5)
