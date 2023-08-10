@@ -25,6 +25,9 @@ class Auth():
             path = path
         else:
             path = path + '/'
+        for item in excluded_paths:
+            if item.endswith('*') and item[-2:] in path:
+                return True
         if path not in excluded_paths:
             return True
         '''elif path + '/' not in excluded_paths:
