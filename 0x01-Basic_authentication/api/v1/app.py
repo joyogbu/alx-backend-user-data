@@ -7,6 +7,7 @@ from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
 from flask_cors import (CORS, cross_origin)
 import os
+from api.v1.auth.auth import Auth
 
 
 app = Flask(__name__)
@@ -15,8 +16,9 @@ CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 
 
 auth = None
-from api.v1.auth.auth import Auth
+# from api.v1.auth.auth import Auth
 auth = Auth()
+
 
 @app.errorhandler(404)
 def not_found(error) -> str:
@@ -46,13 +48,14 @@ def filter_auth():
     if auth is None:
         return
     req_path = request.path
-    value = auth.require_auth(req_path, ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/'])
-    if value == False:
+    value = auth.require_auth(req_path, ['/api/v1/status/',
+                              '/api/v1/unauthorized/', '/api/v1/forbidden/'])
+    if value is False:
         return
     auth_value = auth.authorization_header(request)
-    if auth_value == None:
+    if auth_value is None:
         abort(401)
-    if auth.current_user(request) == None:
+    if auth.current_user(request) is None:
         abort(403)
 
 

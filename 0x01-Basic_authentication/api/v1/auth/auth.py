@@ -36,7 +36,7 @@ class Auth():
         '''define authorization header function'''
         if request is None:
             return None
-        elif request.headers.get('Authorization') == None:
+        elif request.headers.get('Authorization') is None:
             return None
         else:
             return request.headers.get('Authorization')
