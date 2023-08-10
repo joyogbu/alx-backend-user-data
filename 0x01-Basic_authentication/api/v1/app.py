@@ -47,12 +47,12 @@ def filter_auth():
         return
     req_path = request.path
     value = auth.require_auth(req_path, ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/'])
-    if value == True:
+    if value == False:
         return
     auth_value = auth.authorization_header(request)
     if auth_value == None:
         abort(401)
-    if auth.current_user() == None:
+    if auth.current_user(request) == None:
         abort(403)
 
 
