@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 '''basic_auth class that inherits from auth'''
 
+
+import base64
 from flask import request
 from api.v1.auth.auth import Auth
 
@@ -20,3 +22,18 @@ class BasicAuth(Auth):
             return None
         arguments = authorization_header.split()
         return (arguments[1])
+
+    def decode_base64_authorization_header(self, base64_authorization_header:
+                                           str) -> str:
+        '''decode the authorization header'''
+        if base64_authorization_header is None:
+            return None
+        if type(base64_authorization_header) != str:
+            return None
+        try:
+            res = base64_authorization_header.encode('utf-8')
+            res_str = base64.b64decode(res)
+            result = res_str.decode('utf-8')
+            return (result)
+        except ValueError:
+            return None
