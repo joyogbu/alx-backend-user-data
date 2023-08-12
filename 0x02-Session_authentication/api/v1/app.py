@@ -56,7 +56,8 @@ def filter_auth():
         return
     req_path = request.path
     value = auth.require_auth(req_path, ['/api/v1/status/',
-                              '/api/v1/unauthorized/', '/api/v1/forbidden/', '/api/v1/auth_session/login/'])
+                              '/api/v1/unauthorized/', '/api/v1/forbidden/',
+                                         '/api/v1/auth_session/login/'])
     if value is False:
         return
     auth_value = auth.authorization_header(request)
