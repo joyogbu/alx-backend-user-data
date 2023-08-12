@@ -20,7 +20,7 @@ class SessionAuth(Auth):
             return None
         if type(user_id) != str:
             return None
-        sessid = uuid.uuid4()
+        sessid = str(uuid.uuid4())
         self.user_id_by_session_id[sessid] = user_id
         return (sessid)
 
