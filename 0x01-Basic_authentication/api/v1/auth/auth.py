@@ -25,18 +25,14 @@ class Auth():
             path = path
         else:
             path = path + '/'
-        '''for item in excluded_paths:
-            if item[-1] == '*':
-                if item[-1:] in path:
-                    return False'''
+        for item in excluded_paths:
+            if item[-1] == "*":
+                if item[:-1] in path:
+                    return False
+                    # path = item[:-1]
         if path not in excluded_paths:
             return True
-        for item in excluded_paths:
-            if (item[-1] == '*') and (item[-1:] in path):
-                return False
-        '''elif path + '/' not in excluded_paths:
-            return True
-        else:'''
+        '''else:'''
         return False
 
     def authorization_header(self, request=None) -> str:
