@@ -69,7 +69,7 @@ class BasicAuth(Auth):
         my_obj = User.load_from_file()
         if my_obj is None:
             return None
-        my_user = User.sarch(my_obj)
+        my_user = User.search(my_obj)
         if user_email not in my_user:
             return None
         return (my_obj)
