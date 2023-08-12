@@ -6,7 +6,6 @@ import base64
 from flask import request
 from api.v1.auth.auth import Auth
 from models.user import User
-from models.base import Base
 from typing import TypeVar
 
 
@@ -66,13 +65,15 @@ class BasicAuth(Auth):
         '''valid = User().is_valid_password(user_pwd)
         if valid is False:
             return None'''
-        my_obj = User.load_from_file()
-        if my_obj is None:
+        my_obj = User().load_from_file()
+        my_dict = User().to_json(my_obj)
+
+        my_user = User().search(my_dict)
+        if not my_user:
             return None
-        my_user = User.sarch(my_obj)
-        if user_email not in my_user:
+        if m_user.password != user_pwd:
             return None
-        return (my_obj)
+        return (my_user)
 
     def current_user(self, request=None) -> TypeVar('User'):
         '''retrieves a user instance for a request'''
