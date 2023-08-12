@@ -19,8 +19,8 @@ def authenticate_user():
     my_search = User.search({"email": email})
     if not my_search:
         return jsonify({"error": "no user found for this email"}), 404
-    if not User.is_valid_password(passwd):
-        return jsonify({"error": "wromg password"}), 401
+    if not User().is_valid_password(passwd):
+        return jsonify({"error": "wrong password"}), 401
     from api.v1.app import auth
     sessionid = auth.create_session()
     cookie_name = os.getenv('SESSION_NAME')
