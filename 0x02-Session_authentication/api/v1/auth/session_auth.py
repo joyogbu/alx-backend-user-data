@@ -23,4 +23,3 @@ class SessionAuth(Auth):
         sessid = uuid.uuid4()
         self.user_id_by_session_id[sessid] = user_id
         return (sessid)
-
