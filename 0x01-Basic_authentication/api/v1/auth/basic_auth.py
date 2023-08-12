@@ -77,8 +77,8 @@ class BasicAuth(Auth):
     def current_user(self, request=None) -> TypeVar('User'):
         '''retrieves a user instance for a request'''
         a1 = Auth().authorization_header(request)
-        a2 = extract_base64_authorization_header(a1)
-        a3 = decode_base64_authorization_header(a2)
-        a4 = extract_user_credentials(a3)
-        a5 = user_object_from_credentials(a4)
+        a2 = self.extract_base64_authorization_header(a1)
+        a3 = self.decode_base64_authorization_header(a2)
+        a4 = self.extract_user_credentials(a3)
+        a5 = self.user_object_from_credentials(a4[0], a4[1])
         return (a5)
