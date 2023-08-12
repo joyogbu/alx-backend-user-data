@@ -59,6 +59,7 @@ class Auth():
             return None
         val = request.cookies
         # val.get(reque)
-        res = val.get('_my_session_id')
-        os.getenv('SESSION_NAME', res)
+        # res = val.get('_my_session_id')
+        cookie_val = os.getenv('SESSION_NAME', '_my_session_id')
+        res = val.get(cookie_val)
         return res
