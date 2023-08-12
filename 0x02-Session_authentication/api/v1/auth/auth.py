@@ -4,7 +4,7 @@
 
 from flask import request
 from typing import List, TypeVar
-import requests
+import os
 
 
 class Auth():
@@ -59,5 +59,6 @@ class Auth():
             return None
         val = request.cookies
         # val.get(reque)
-        SESSION_NAME = val.get('_my_session_id')
-        return SESSION_NAME
+        res = val.get('_my_session_id')
+        os.getenv('SESSION_NAME', res)
+        return res
