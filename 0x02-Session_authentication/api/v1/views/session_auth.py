@@ -2,28 +2,34 @@
 """ Module doe session authentication
 """
 from api.v1.views import app_views
-from flask import abort, jsonify, request
+from flask import abort, jsonify, request, make_response
 from models.user import User
+import os
 
 
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
 def authenticate_user():
     '''authenticate a user'''
-    email = request.form.get('email')
+    e_mail = request.form.get('email')
     passwd = request.form.get('password')
-    if email is None:
+    if e_mail is None:
         return jsonify({"error": "email missing"}), 400
     if passwd is None:
         return jsonify({"error": "password missing"}), 400
     # my_obj = User.load_from_file()
-    my_search = User.search({"email": email})
-    if not my_search:
+    my_search = User.search({"email": e_mail})
+    if not my_search or my_search == []:
         return jsonify({"error": "no user found for this email"}), 404
-    if not User().is_valid_password(passwd):
-        return jsonify({"error": "wrong password"}), 401
-    from api.v1.app import auth
-    sessionid = auth.create_session()
-    cookie_name = os.getenv('SESSION_NAME')
-    my_user = User.to_json(my_search)
-    my_user.set_cookie(cookie_name, my_search)
-    return my_user
+    else:
+        for users in my_search:
+            if not users.is_valid_password(passwd):
+                return jsonify({"error": "wrong password"}), 401
+            else:
+                from api.v1.app import auth
+                userid = users.id
+                sessionid = auth.create_session(userid)
+                cookie_name = os.getenv('SESSION_NAME')
+                my_user = users.to_json(True)
+                resp = make_response(my_user)
+                resp.set_cookie(cookie_name, sessionid)
+            return(resp)
