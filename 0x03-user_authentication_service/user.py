@@ -3,7 +3,7 @@
 
 
 import sqlalchemy
-from sqlalachemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 
 
@@ -12,7 +12,7 @@ Base = declarative_base()
 
 class User(Base):
     '''user class inheriting from declarative base'''
-    __tablename__ = users
+    __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     email = Column(String(250), nullable=False)
     hashed_password = Column(String(250), nullable=False)
