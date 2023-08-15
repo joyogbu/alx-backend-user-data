@@ -32,7 +32,7 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self, email: str, hashed_password: str) -> TypeVar('User'):
+    def add_user(self, email: str, hashed_password: str) -> User:
         '''save the user to a database andreturns a user object'''
         new_user = User(email, hashed_password)
         # Base.metadata.create_all(engine)
