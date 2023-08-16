@@ -81,7 +81,7 @@ class Auth:
             self._db.update_user(user_id, session_id=None)
         except exception:
             return
-        return None
+        # return None
 
 
 def _generate_uuid() -> str:
