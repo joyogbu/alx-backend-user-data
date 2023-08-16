@@ -80,7 +80,7 @@ class Auth:
         try:
             self._db.update_user(user_id, session_id=None)
         except NoResultFound as err:
-            return None
+            return
 
 
 def _generate_uuid() -> str:
