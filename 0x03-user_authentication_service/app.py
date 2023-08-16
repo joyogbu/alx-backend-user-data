@@ -38,7 +38,7 @@ def login():
     login_valid = AUTH.valid_login(email, passwd)
     if login_valid is False:
         abort(401)
-    sessionid = AUTH.create_session(email, passwd)
+    sessionid = AUTH.create_session(email)
     resp = make_response(sessionid)
     resp.set_cookie('session_id', sessionid)
     return jsonify({"email": email, "message": "logged in"})
