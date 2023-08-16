@@ -34,14 +34,14 @@ def login():
     '''login a user and create a session id'''
     email = request.form.get('email')
     passwd = request.form.get('password')
-    # user = AUTH.find_user_by(email=email)
+    # user = DB.find_user_by(email=email)
     login_valid = AUTH.valid_login(email, passwd)
     if login_valid is False:
         abort(401)
     sessionid = AUTH.create_session(email)
-    resp = make_response(sessionid)
-    resp.set_cookie('session_id', sessionid)
-    return jsonify({"email": email, "message": "logged in"})
+    out = jsonify({"email": email, "message": "logged in"})
+    out.set_cookie('session_id', sessionid)
+    return out
 
 
 # AUTH = Auth()
