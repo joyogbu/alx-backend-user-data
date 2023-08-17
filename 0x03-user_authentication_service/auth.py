@@ -92,7 +92,7 @@ class Auth:
                 user.reset_token = str(new_uuid)
                 return new_uuid
             else:
-                raise ValueError
+                return None
         except NoResultFound:
             raise ValueError
 
