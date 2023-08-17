@@ -88,8 +88,8 @@ class Auth:
         try:
             user = self._db.find_user_by(email=email)
             if user is not None:
-                new_uuid = uuid.uuid4()
-                user.reset_token = str(new_uuid)
+                new_uuid = _generate_uuid()
+                user.reset_token = new_uuid
                 return new_uuid
             else:
                 return None
