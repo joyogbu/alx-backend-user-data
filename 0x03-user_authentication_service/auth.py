@@ -83,6 +83,19 @@ class Auth:
             return
         # return None
 
+    def get_reset_password_token(self, email: str) -> str:
+        '''get reset password token'''
+        try:
+            user = AUTH.find_user_by(email=email)
+            if user is not None:
+                new_uuid = uuid.uuid4()
+                user.reset_token = str(new_uuid)
+                return new_uuid
+            else:
+                raise ValueError
+        except NoResultFound:
+            raise ValueError
+
 
 def _generate_uuid() -> str:
     '''generate a return a string representation of a new uuid'''
