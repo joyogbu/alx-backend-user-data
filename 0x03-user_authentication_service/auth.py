@@ -94,7 +94,7 @@ class Auth:
             else:
                 raise ValueError
         except NoResultFound:
-            return
+            raise ValueError
 
 
 def _generate_uuid() -> str:
