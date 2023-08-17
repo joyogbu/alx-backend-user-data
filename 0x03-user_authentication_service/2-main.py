@@ -14,8 +14,8 @@ my_db = DB()
 user = my_db.add_user("test@test.com", "PwdHashed")
 print(user.id)
 
-find_user = my_db.find_user_by(email="test@test.com")
-print(find_user.id)
+find_user = my_db.find_user_by(email="bob@bob.com")
+print(find_user.hashed_password)
 try:
     find_user = my_db.find_user_by(email="test2@test.com")
     print(find_user.id)
