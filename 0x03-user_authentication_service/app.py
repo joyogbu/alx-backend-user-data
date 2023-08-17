@@ -2,7 +2,8 @@
 '''create a basic flask app'''
 
 
-from flask import Flask, jsonify, request, abort, make_response, url_for, redirect
+from flask import Flask, jsonify, request, abort, make_response
+from flask import url_for, redirect
 from user import User
 from db import DB
 from auth import Auth
@@ -44,7 +45,7 @@ def login():
     return out
 
 
-@app.route('/sessions', mrthods=['DELETE'], strict_slashes=False)
+@app.route('/sessions', methods=['DELETE'], strict_slashes=False)
 def logout():
     '''logout and destroy session'''
     sessid = request.cookies.get('session_id')
