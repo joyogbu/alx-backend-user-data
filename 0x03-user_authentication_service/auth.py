@@ -86,7 +86,7 @@ class Auth:
             # if user is not None:
             new_uuid = _generate_uuid()
             try:
-                self._db.update_user(user.id, "reset_token": new_uuid)
+                self._db.update_user(user.id, user.reset_token=new_uuid)
                 # user.reset_token = new_uuid
                 return new_uuid
             except ValueError:
