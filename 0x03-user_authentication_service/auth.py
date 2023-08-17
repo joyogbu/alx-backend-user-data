@@ -90,7 +90,7 @@ class Auth:
                 # user.reset_token = new_uuid
                 return new_uuid
             except ValueError:
-                pass
+                return None
             # return new_uuid
             # else:
             # return None
