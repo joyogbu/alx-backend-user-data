@@ -97,6 +97,15 @@ class Auth:
         except NoResultFound:
             raise ValueError
 
+    def update_password(self, reset_token: str, password: str) -> None:
+        '''implement update password'''
+        try:
+            user = self._db.find_user_by(reset_token=reset_token)
+            passwd_hash = _hash_password(password)
+            self._db.update_user(user.id, hashed_password=passwd_hash, reset_token=None)
+        except NoResultFound:
+            raise ValueError
+
 
 def _generate_uuid() -> str:
     '''generate a return a string representation of a new uuid'''
