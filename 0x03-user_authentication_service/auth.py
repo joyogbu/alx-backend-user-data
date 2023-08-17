@@ -78,7 +78,7 @@ class Auth:
         '''find user and destroy the user session'''
         # user = self._db.find_user_by(id=user_id)
         try:
-            self._db.update_user(user_id, session_id: None)
+            self._db.update_user(user_id, "session_id": None)
         except ValueError:
             return
         # return None
