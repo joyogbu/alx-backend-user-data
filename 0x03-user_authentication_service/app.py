@@ -56,6 +56,19 @@ def logout():
     else:
         abort(403)
 
+@app.route('/profile', methods=['GET'], strict_slashes=False)
+def profile():
+    '''implementing the user profile'''
+    sessid = request.cookies.get('session_id')
+    try:
+        user = DB().find_user_by(session_id=sessid)
+        if user is not None:
+            return jsonify({"email": user.email}), 200
+        else:
+            abort(403)
+    except NoResultResult:
+        return None
+
 # AUTH = Auth()
 
 
