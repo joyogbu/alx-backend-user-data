@@ -39,7 +39,7 @@ class DB:
         # Base.metadata.create_all(engine)
         self._session.add(new_user)
         self._session.commit()
-        self._session.close()
+        # self._session.close()
         return new_user
 
     def find_user_by(self, **kwargs) -> User:
@@ -51,14 +51,14 @@ class DB:
 
     def update_user(self, user_id: int, **kwargs) -> None:
         '''update users attributes'''
-        try:
-            user = self.find_user_by(id=user_id)
-            for k, v in kwargs.items():
-                if hasattr(user, k):
-                    user.k = v
-                    self._session.commit()
-                    self._session.close()
-                else:
-                    raise ValueError
-        except NoResultFound:
-            return
+        # try:
+        user = self.find_user_by(id=user_id)
+        for k, v in kwargs.items():
+            if hasattr(user, k):
+                user.k = v
+                # self._session.commit()
+                # self._session.close()
+            else:
+                raise ValueError
+        # except NoResultFound:
+            # return
