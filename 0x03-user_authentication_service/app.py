@@ -7,6 +7,7 @@ from flask import url_for, redirect
 from user import User
 from db import DB
 from auth import Auth
+from sqlalchemy.orm.exc import NoResultFound
 
 
 app = Flask(__name__)
@@ -55,6 +56,7 @@ def logout():
         redirect(url_for('index'))
     else:
         abort(403)
+
 
 @app.route('/profile', methods=['GET'], strict_slashes=False)
 def profile():
