@@ -50,9 +50,12 @@ class DB:
 
     def update_user(self, user_id: int, **kwargs) -> None:
         '''update users attributes'''
-        user = self.find_user_by(id=user_id)
-        for k, v in kwargs.items():
-            if hasattr(user, k):
-                user.k = v
-            else:
-                raise ValueError
+        try:
+            user = self.find_user_by(id=user_id)
+            for k, v in kwargs.items():
+                if hasattr(user, k):
+                    user.k = v
+                else:
+                    raise ValueError
+        except NoResultFound:
+            return
