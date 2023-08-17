@@ -44,6 +44,17 @@ def login():
     return out
 
 
+@app.route('/sessions', mrthods=['DELETE'], strict_slashes=False)
+def logout():
+    '''logout and destroy session'''
+    sessid = request.cookies.get('session_id')
+    user = AUTH.get_user_from_session_id(sessid)
+    if user is not None:
+        destroy_session(user.id)
+        redirect(url_for('index'))
+    else:
+        abort(403)
+
 # AUTH = Auth()
 
 
