@@ -74,11 +74,11 @@ class BasicAuth(Auth):
             if not my_user or my_user == []:
                 return None
             for user in my_user:
-                if not user.is_valid_password(user_pwd):
+                if user.is_valid_password(user_pwd):
                     # if user_email not in my_user:
-                    return None
-                else:
-                    return (user)
+                    return user
+                    '''else:
+                    return (user)'''
         except exception as e:
             return None
 
