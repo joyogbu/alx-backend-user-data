@@ -66,13 +66,18 @@ class BasicAuth(Auth):
         '''valid = User().is_valid_password(user_pwd)
         if valid is False:
             return None'''
-        my_obj = User.load_from_file()
+        '''my_obj = User.load_from_file()
         if my_obj is None:
+            return None'''
+        my_user = User.search({"email": user_email})
+        if not my_user:
             return None
-        my_user = User.search(my_obj)
-        if user_email not in my_user:
-            return None
-        return (my_obj)
+        for user in my_user:
+            if not user.is_valid_password(user_pwd):
+                # if user_email not in my_user:
+                return None
+            else:
+                return (user)
 
     def current_user(self, request=None) -> TypeVar('User'):
         '''retrieves a user instance for a request'''
